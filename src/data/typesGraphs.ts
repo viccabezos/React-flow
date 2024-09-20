@@ -13,7 +13,7 @@ type Params = {
 };
 
 type Graph = {
-  name: "string";
+  name: string;
   //   params: Params;
   params: {
     actionType: ActionType;
@@ -22,4 +22,4 @@ type Graph = {
   };
 };
 
-export const graphs: Graph[] = [];
+export type { Graph, ActionType, Format, MediaType, Params };
