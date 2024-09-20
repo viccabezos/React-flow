@@ -1,4 +1,5 @@
 import "./App.css";
+import { ModeToggle } from "./components/layout/sidebar/ModeToggle/ModeToggle";
 import { graphs } from "./data/data";
 
 function App() {
@@ -6,7 +7,8 @@ function App() {
 
   return (
     <>
-      <div className="bg-red-500">
+      <div className="bg-red-500 flex flex-col gap-4">
+        <ModeToggle />
         <p>HELLO</p>
       </div>
       <div>{JSON.stringify(fakeGraphsData, null, 2)}</div>
