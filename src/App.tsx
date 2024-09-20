@@ -1,18 +1,22 @@
 import "./App.css";
-import { ModeToggle } from "./components/layout/sidebar/ModeToggle/ModeToggle";
-import { graphs } from "./data/data";
+import Layout from "./components/layout/layout";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { CreateGraph } from "./pages/createGraph";
+import { RunJobs } from "./pages/RunJobs";
+import { JobMonitoring } from "./pages/JobMonitoring";
 
 function App() {
-  const fakeGraphsData = graphs;
-
   return (
-    <>
-      <div className="bg-red-500 flex flex-col gap-4">
-        <ModeToggle />
-        <p>HELLO</p>
-      </div>
-      <div>{JSON.stringify(fakeGraphsData, null, 2)}</div>
-    </>
+    <Router>
+      <Layout>
+        <Routes>
+          <Route path="/create-graph" element={<CreateGraph />} />
+          <Route path="/run-jobs" element={<RunJobs />} />
+          <Route path="/job-monitoring" element={<JobMonitoring />} />
+          {/* Add more routes here */}
+        </Routes>
+      </Layout>
+    </Router>
   );
 }
 

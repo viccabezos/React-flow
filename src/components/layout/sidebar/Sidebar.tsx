@@ -1,24 +1,48 @@
-// import { ScrollArea } from "@/components/ui/scroll-area";
-import { cn } from "../../../utils/utils";
-import { NavLink } from "./NavLink";
+import { PanelsTopLeft } from "lucide-react";
+import { cn } from "@/utils/utils";
+import { Button } from "@/components/ui/button";
+import { SidebarToggle } from "./sidebar-toggle";
+import { Menu } from "./menu/menu";
+import { useSidebarToggle } from "@/hooks/use-sidebar-toggle";
+import { ModeToggle } from "../ModeToggle/ModeToggle";
 
-// interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {}
+export function Sidebar() {
+  const { isOpen, setIsOpen } = useSidebarToggle(); // Directly using Zustand's state
 
-export function Sidebar({ className }) {
   return (
-    <div className={cn("pb-12", className)}>
-      <div className="space-y-4 py-4">
-        <div className="px-3 py-2">
-          <h2 className="mb-2 px-4 text-lg font-semibold tracking-tight">
-            Menu
-          </h2>
-          <div className="space-y-1">
-            <NavLink to="/">Home</NavLink>
-            <NavLink to="/dashboard">Dashboard</NavLink>
-            <NavLink to="/settings">Settings</NavLink>
-          </div>
-        </div>
+    <aside
+      className={cn(
+        "fixed top-0 left-0 z-20 h-screen transition-[width] ease-in-out duration-300",
+        isOpen ? "w-72" : "w-[90px]"
+      )}
+    >
+      <SidebarToggle isOpen={isOpen} setIsOpen={setIsOpen} />
+      <div className="relative h-full flex flex-col px-3 py-4 overflow-y-auto shadow-md dark:shadow-zinc-800">
+        <Button
+          className={cn(
+            "transition-transform ease-in-out duration-300 mb-1",
+            isOpen === false ? "translate-x-1" : "translate-x-0"
+          )}
+          variant="link"
+          asChild
+        >
+          <a href="/dashboard" className="flex items-center gap-2">
+            <PanelsTopLeft className="w-6 h-6 mr-1" />
+            <h1
+              className={cn(
+                "font-bold text-lg whitespace-nowrap transition-[transform,opacity,display] ease-in-out duration-300",
+                isOpen === false
+                  ? "-translate-x-96 opacity-0 hidden"
+                  : "translate-x-0 opacity-100"
+              )}
+            >
+              Orchestrator UI
+            </h1>
+          </a>
+        </Button>
+        <Menu isOpen={isOpen} />
+        <ModeToggle />
       </div>
-    </div>
+    </aside>
   );
 }
