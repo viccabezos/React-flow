@@ -1,11 +1,15 @@
 type ActionType = "move" | "convert" | "flow" | "edit" | "write";
 
+type Format = "YUV" | "MP4" | "MP3";
+
+type MediaType = "video" | "image" | "file";
+
 type Params = {
   type: "flow" | "type";
   typeParams: Record<string, string>;
-  format: string;
+  format: Format;
   formatParams: string;
-  mediaType: string;
+  mediaType: MediaType;
 };
 
 type Graph = {
