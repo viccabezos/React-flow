@@ -1,15 +1,17 @@
 import { faker } from "@faker-js/faker";
-import { Graph, ActionType, Format, MediaType } from "./typesGraphs";
+import { Graph, ActionType, Format, MediaType, NodeType } from "./typesGraphs";
 
 // Define arrays with exact type values
 const actionTypes: ActionType[] = ["move", "convert", "flow", "edit", "write"];
 const formats: Format[] = ["YUV", "MP4", "MP3"];
 const mediaTypes: MediaType[] = ["video", "image", "file"];
+const nodeTypes: NodeType[] = ["menu", "drawer"];
 
 export const graphs: Graph[] = Array.from(
   { length: 10 },
   (): Graph => ({
     name: faker.word.noun(),
+    nodeType: faker.helpers.arrayElement(nodeTypes),
     params: {
       actionType: faker.helpers.arrayElement(actionTypes), // Ensures a valid ActionType
       InParams: {

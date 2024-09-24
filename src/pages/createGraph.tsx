@@ -15,8 +15,9 @@ import "@xyflow/react/dist/style.css";
 // import "./index.css";
 import { DnDProvider, useDnD } from "@/context/dnd-context";
 import { RightSidebar } from "@/components/react-flow-tuto/right sidebar/right-sidebar";
-import { graphs } from "@/data/data";
 import { useTheme } from "@/components/themeProvider/Theme-provider";
+import { MenuNode } from "@/components/react-flow-tuto/menuNode";
+import { DrawerNode } from "@/components/react-flow-tuto/drawerNode";
 
 const initialNodes = [
   // {
@@ -37,6 +38,11 @@ function CreateGraph() {
   const { screenToFlowPosition } = useReactFlow();
   const [type] = useDnD();
 
+  const nodeTypes = {
+    menu: MenuNode,
+    drawer: DrawerNode,
+  };
+
   const { theme } = useTheme();
   const colorMode: ColorMode =
     theme === "dark"
@@ -49,7 +55,7 @@ function CreateGraph() {
 
   const onConnect = useCallback(
     (params) => setEdges((eds) => addEdge(params, eds)),
-    []
+    [setEdges]
   );
 
   const onDragOver = useCallback((event) => {
@@ -61,14 +67,10 @@ function CreateGraph() {
     (event) => {
       event.preventDefault();
 
-      // check if the dropped element is valid
       if (!type) {
         return;
       }
 
-      // project was renamed to screenToFlowPosition
-      // and you don't need to subtract the reactFlowBounds.left/top anymore
-      // details: https://reactflow.dev/whats-new/2023-11-10
       const position = screenToFlowPosition({
         x: event.clientX,
         y: event.clientY,
@@ -82,7 +84,7 @@ function CreateGraph() {
 
       setNodes((nds) => nds.concat(newNode));
     },
-    [screenToFlowPosition, type]
+    [screenToFlowPosition, setNodes, type]
   );
 
   return (
@@ -98,6 +100,7 @@ function CreateGraph() {
           onDragOver={onDragOver}
           fitView
           colorMode={colorMode}
+          nodeTypes={nodeTypes}
         >
           <Controls />
           <Background />

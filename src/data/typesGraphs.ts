@@ -4,6 +4,7 @@ type Format = "YUV" | "MP4" | "MP3";
 
 type MediaType = "video" | "image" | "file";
 
+type NodeType = "menu" | "drawer";
 type Params = {
   type: "flow" | "type";
   typeParams: Record<string, string>;
@@ -14,6 +15,7 @@ type Params = {
 
 type Graph = {
   name: string;
+  nodeType: NodeType;
   //   params: Params;
   params: {
     actionType: ActionType;
@@ -22,4 +24,4 @@ type Graph = {
   };
 };
 
-export type { Graph, ActionType, Format, MediaType, Params };
+export type { Graph, ActionType, Format, MediaType, Params, NodeType };

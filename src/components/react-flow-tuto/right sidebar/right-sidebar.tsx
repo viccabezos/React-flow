@@ -1,5 +1,6 @@
 import { useDnD } from "@/context/dnd-context";
 import { graphs } from "@/data/data";
+import { cn } from "@/utils/utils";
 
 export function RightSidebar() {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -17,7 +18,12 @@ export function RightSidebar() {
       {graphs.map((graph, index) => (
         <div
           key={index}
-          className="dndnode border-2 border-foreground rounded-md p-2"
+          className={cn(
+            "dndnode border-2 rounded-md p-2 text-center",
+            graph.nodeType === "drawer"
+              ? "border-green-500"
+              : "border-foreground"
+          )}
           onDragStart={(event) => onDragStart(event, graph.name)}
           draggable
         >
